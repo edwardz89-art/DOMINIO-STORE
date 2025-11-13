@@ -1,0 +1,357 @@
+  	
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DOMINIO STORE</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  background: linear-gradient(to right, #f8f9fa, #e8ecf1);
+  color: #222;
+  overflow-x: hidden;
+}
+
+header {
+  background: linear-gradient(90deg, #1e1e1e, #434343);
+  color: white;
+  padding: 1.5rem;
+  text-align: center;
+  font-size: 1.6rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+section {
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.inicio {
+  background: linear-gradient(135deg, #141e30, #243b55);
+  color: white;
+  padding: 5rem 2rem;
+  border-bottom: 2px solid rgba(255,255,255,0.1);
+}
+
+.inicio h2 {
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
+}
+
+.catalogo {
+  position: relative;
+  overflow: hidden;
+  color: white;
+  padding: 5rem 2rem;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(6px);
+}
+
+.catalogo .fondo-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  opacity: 0.35;
+}
+
+.catalogo h2, .productos {
+  position: relative;
+  z-index: 1;
+}
+
+.producto {
+  background: rgba(255,255,255,0.1);
+  border-radius: 15px;
+  padding: 1rem;
+  width: 250px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+}
+.producto:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+}
+.producto img {
+  border-radius: 10px;
+  width: 100%;
+}
+
+.catalogo h2 {
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  text-transform: uppercase;
+  color: #333;
+}
+
+.productos {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.producto {
+  background: white;
+  border-radius: 15px;
+  padding: 1rem;
+  width: 250px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.producto:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+}
+.producto img {
+  width: 100%;
+  border-radius: 10px;
+}
+.producto h3 {
+  margin-top: 0.75rem;
+  font-size: 1.1rem;
+  color: #111;
+}
+.producto p {
+  font-weight: bold;
+  color: #c49b3f;
+}
+
+.contacto {
+  background: linear-gradient(135deg, #1c1c1c, #2c2c2c);
+  color: white;
+  padding: 4rem 2rem;
+}
+
+.boton {
+  background-color: #c49b3f;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 10px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+.boton:hover {
+  background-color: #b38a32;
+  transform: scale(1.05);
+}
+.boton i { margin-right: 8px; }
+
+.whatsapp-flotante {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #25D366;
+  color: white;
+  font-size: 2rem;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  text-decoration: none;
+  z-index: 100;
+  transition: 0.3s;
+}
+.whatsapp-flotante:hover {
+  background-color: #20b858;
+  transform: scale(1.1);
+}
+
+footer {
+  background: linear-gradient(90deg, #111, #333);
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+}
+
+footer a {
+  color: #c49b3f;
+  text-decoration: none;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 200;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.7);
+}
+
+.modal-contenido {
+  background-color: white;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 15px;
+  width: 80%;
+  max-width: 500px;
+  text-align: center;
+  position: relative;
+  color: #333;
+  box-shadow: 0 0 25px rgba(0,0,0,0.3);
+}
+
+.modal-contenido img,
+.modal-contenido video {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.cerrar {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 1.5rem;
+  color: #333;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+<header><h1>DOMINIO STORE</h1></header>
+
+<section class="inicio">
+<h2>Bienvenido a DOMINIO STORE</h2>
+<p>Tu destino premium para zapatillas de las mejores marcas.</p>
+</section>
+
+<section id="catalogo" class="catalogo">
+  <!-- 🎥 Fondo de video -->
+  <video autoplay muted loop playsinline class="fondo-video">
+    <source src="video/fondo_tienda.mp4" type="video/mp4">
+  </video>
+
+<h2>Nuestros Productos</h2>
+<div class="productos">
+<!-- Solo tres productos de ejemplo; se pueden duplicar hasta 12 -->
+<article class="producto" onclick="abrirModalVideo('ZAPATILLAS ID8760 ADIDAS GALAXY 7 M', 'video/GALAXY7MNEGROBLANCO.mp4', 'TALLAS DISPONIBLES (42.5)', 'S/ 160')">
+<img src="img/GALAXY7MNEGROBLANCO.jpg" alt="GALAXY 7 M">
+<h3>ADIDAS GALAXY 7 M</h3>
+<p>S/ 160</p>
+</article>
+<article class="producto" onclick="abrirModalVideo('ZAPATILLAS ID8757 ADIDAS GALAXY 7 M', 'video/GALAXY7MNEGRO.mp4', 'TALLAS DISPONIBLES (40/40.5/41/42/42.5/43).', 'S/ 160')">
+<img src="img/GALAXY7MNEGRO.jpg" alt="GALAXY 7 M">
+<h3>ADIDAS GALAXY 7 M</h3>
+<p>S/ 160</p>
+</article>
+<article class="producto" onclick="abrirModalVideo('ZAPATILLAS IE8136 ADIDAS GALAXY 6 M', 'video/GALAXY6M.mp4', 'TALLAS DISPONIBLES (40.5/42/42.5/44/44.5).', 'S/ 160')">
+<img src="img/GALAXY6M.jpg" alt="GALAXY 6 M">
+<h3>ADIDAS GALAXY 6 M</h3>
+<p>S/ 160</p>
+</article>
+<article class="producto" onclick="abrirModalVideo('ZAPATILLAS ID2702 ADIDAS DURAMO RC', 'video/DURAMORCBLANCO.mp4', 'TALLAS DISPONIBLES (40.5/42/42.5/44.5).', 'S/ 160')">
+<img src="img/DURAMORCBLANCO.jpg" alt="DURAMO RC">
+<h3>ADIDAS DURAMO RC</h3>
+<p>S/ 160</p>
+</article>
+<article class="producto" onclick="abrirModalVideo('ZAPATILLAS FD6454-003 NIKE DOWNSHIFTER 13', 'video/DOWNSHIFTER13NEGRA.mp4', 'TALLAS DISPONIBLES (41/42/42.5/43/44)', 'S/ 180')">
+<img src="img/DOWNSHIFTER13NEGRA.jpg" alt="DOWNSHIFTER 13">
+<h3>NIKE DOWNSHIFTER 13</h3>
+<p>S/ 180</p>
+</article>
+<article class="producto" onclick="abrirModalVideo('ZAPATILLAS FD6454-001 NIKE DOWNSHIFTER 13', 'video/DOWNSHIFTER13NEGROBLANCO.mp4', 'TALLAS DISPONIBLES (40.5/41/42/42.5/44)', 'S/ 180')">
+<img src="img/DOWNSHIFTER13NEGROBLANCO.jpg" alt="DOWNSHIFTER 13">
+<h3>NIKE DOWNSHIFTER 13</h3>
+<p>S/ 180</p>
+</article>
+<article class="producto" onclick="abrirModalVideo('ZAPATILLAS 100000169 REEBOK EXOFIT URBAN', 'EXOFITURBANBLANCA.mp4', 'TALLAS DISPONIBLES (AGOTADO)', 'S/ 145')">
+<img src="img/EXOFITURBANBLANCA.jpg" alt="EXOFIT URBAN">
+<h3>REEBOK EXOFIT URBAN</h3>
+<p>S/ 145</p>
+</article>
+<article class="producto" onclick="abrirModalVideo('ZAPATILLAS 100000168 REEBOK EXOFIT URBAN', 'video/EXOFITURBANNEGRO.mp4', 'TALLAS DISPONIBLES (42.5/43).', 'S/ 145')">
+<img src="img/EXOFITURBANNEGRO.jpg" alt="EXOFIT URBAN">
+<h3>REEBOK EXOFIT URBAN</h3>
+<p>S/ 145</p>
+</article>
+<article class="producto" onclick="abrirModalVideo('ZAPATILLAS HJ9198-101 NIKE REVOLUTION 8', 'video/REVOLUTION8BLANCO.mp4', 'TALLAS DISPONIBLES (40/41/42/42.5/43/44)', 'S/ 175')">
+<img src="img/REVOLUTION8BLANCO.jpg" alt="REVOLUTION 8">
+<h3>ADIDAS REVOLUTION 8</h3>
+<p>S/ 175</p>
+</article>
+<article class="producto" onclick="abrirModalVideo('ZAPATILLAS HJ9198-102 NIKE REVOLUTION 8', 'video/REVOLUTION8BLANCOYROJO.mp4', 'TALLAS DISPONIBLES (41/42/42.5/43/44)', 'S/ 175')">
+<img src="img/REVOLUTION8BLANCOYROJO.jpg" alt="REVOLUTION 8">
+<h3>NIKE REVOLUTION 8</h3>
+<p>S/ 175</p>
+</article>
+<article class="producto" onclick="abrirModalVideo('ZAPATILLAS 100000120 REEBOK PRINCESS', 'video/PRINCESS.mp4', 'TALLAS DISPONIBLES (35/35.5/37/37.5)', 'S/ 145')">
+<img src="img/PRINCESS.jpg" alt="PRINCESS">
+<h3>REEBOK PRINCESS</h3>
+<p>S/ 145</p>
+</article>
+<article class="producto" onclick="abrirModalVideo('ZAPATILLAS 31109505 PUMA FTR WAVE', 'video/PUMAFTR.mp4', 'TALLAS DISPONIBLES (40.5/41/42/42.5/43)', 'S/ 145')">
+<img src="img/PUMAFTR.jpg" alt="WAVE FTR">
+<h3>PUMA FTR WAVE</h3>
+<p>S/ 145</p>
+</article>
+</div></section>
+<section class="contacto">
+<h2>Contáctanos</h2>
+<p>Escríbenos a nuestro WhatsApp para pedidos o consultas.</p>
+<a href="https://wa.me/51990105444" target="_blank" class="boton"><i class="fab fa-whatsapp"></i> Contactar por WhatsApp</a>
+</section>
+<div id="modalProducto" class="modal">
+<div class="modal-contenido">
+<span class="cerrar" onclick="cerrarModal()">&times;</span>
+<img id="modalImagen" src="" style="display:none;">
+<video id="modalVideo" controls autoplay playsinline style="width:100%; display:none;">
+  <source id="modalVideoSrc" src="" type="video/mp4">
+  Tu navegador no soporta video.
+</video>
+<h3 id="modalTitulo"></h3>
+<p id="modalDescripcion"></p>
+<p id="modalPrecio" style="font-weight:bold;"></p>
+<a id="modalBoton" href="#" class="boton" target="_blank"><i class="fab fa-whatsapp"></i> Comprar por WhatsApp</a>
+</div></div>
+<a href="https://wa.me/51990105444" class="whatsapp-flotante" target="_blank"><i class="fab fa-whatsapp"></i></a>
+<footer>
+<p>© 2025 DOMINIO STORE | <i class="fab fa-whatsapp"></i> <a href="https://wa.me/51990105444">990105444</a></p>
+</footer>
+<script>
+function abrirModalVideo(titulo, videoSrc, descripcion, precio) {
+  document.getElementById('modalTitulo').innerText = titulo;
+  document.getElementById('modalDescripcion').innerText = descripcion;
+  document.getElementById('modalPrecio').innerText = precio;
+  document.getElementById('modalBoton').href = 'https://wa.me/51990105444?text=Hola quiero comprar ' + titulo;
+  const modalVideo = document.getElementById('modalVideo');
+  const modalVideoSrc = document.getElementById('modalVideoSrc');
+  const modalImagen = document.getElementById('modalImagen');
+  modalVideoSrc.src = videoSrc;
+  modalVideo.load();
+  modalVideo.style.display = 'block';
+  modalImagen.style.display = 'none';
+  document.getElementById('modalProducto').style.display = 'block';
+}
+function cerrarModal() {
+  const modalVideo = document.getElementById('modalVideo');
+  modalVideo.pause();
+  modalVideo.style.display = 'none';
+  document.getElementById('modalProducto').style.display = 'none';
+}
+window.onclick = function(e) { if (e.target == document.getElementById('modalProducto')) cerrarModal(); }
+</script>
+</body>
+</html>
