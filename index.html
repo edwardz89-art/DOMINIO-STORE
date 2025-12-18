@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DOMINIO STORE - Por Tallas</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  background: #f4f4f6;
+  color: #222;
+}
+
+header {
+  background: linear-gradient(90deg,#1e1e1e,#434343);
+  color: white;
+  padding: 1.5rem;
+  text-align: center;
+  font-size: 1.6rem;
+}
+
+section {
+  padding: 2rem;
+}
+
+.tallas-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 600px;
+  margin: auto;
+}
+
+.talla-item {
+  background: white;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.modelo {
+  background: white;
+  border-radius: 12px;
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  margin: 1rem 0;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.modelo img {
+  width: 200px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* 🔥 VIDEO DE FONDO */
+.video-fondo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+/* 🔥 MODAL */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 200;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.7);
+}
+
+.modal-contenido {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 430px;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 25px rgba(0,0,0,0.3);
+}
+
+.modal-contenido img,
+.modal-contenido video {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.cerrar {
+  position: fixed;
+  top: 15px;
+  right: 25px;
+  font-size: 3rem;
+  color: black;
+  cursor: pointer;
+  font-weight: bold;
+  z-index: 5000;
+}
+
+.cerrar:hover {
+  color: #666;
+  transform: scale(1.2);
+}
+</style>
+
+</head>
+<body>
+	
+<video autoplay muted loop playsinline class="video-fondo">
+  <source src="videos/fondo_tienda.mp4" type="video/mp4">
+</video>
+
+
+<header><h1>DOMINIO STORE</h1></header>
+
+<div style="text-align:center; margin-top:10px;">
+  <a href="https://wa.me/51923285372" target="_blank" style="background:#25D366;color:white;padding:12px 20px;border-radius:50px;text-decoration:none;font-weight:600;">
+    <i class="fab fa-whatsapp"></i> WhatsApp
+  </a>
+</div>
+
+<section>
+  <h2 style="text-align:center;">Selecciona tu tallarin</h2>
+  <div class="tallas-lista" id="listaTallas"></div>
+</section>
+
+<div id="modalProducto" class="modal">
+  <div class="modal-contenido">
+
+    <span class="cerrar" onclick="cerrarModal()">&times;</span>
+    <h2 id="modalTitulo"></h2>
+    <video id="modalVideo" controls style="display:none;"><source id="modalVideoSrc"></video>
+    <img id="modalImagen" style="display:none;">
+    <p id="modalPrecio"></p>
+    <a id="modalWspBoton" href="https://wa.me/51923285372" target="_blank" style="background:#25D366;color:white;padding:12px 20px;border-radius:50px;text-decoration:none;display:inline-block;margin-top:10px;font-weight:600;">
+      <i class="fab fa-whatsapp"></i> Comprar por WhatsApp
+    </a>
+  </div>
+</div>
+
+</body>
+
+<script>
+const tallas = [35,35.5,36,36.5,37,38,38.5,40,40.5,41,42,42.5,43,44,44.5];
+
+let modelosPorTalla = {
+
+  35:[{nombre:"REEBOK PRINCESS",precio:"S/ 129",imagen:"img/PRINCESS.jpg",video:"video/PRINCESS.mp4"},
+      ],
+
+  35.5:[{nombre:"REEBOK PRINCESS",precio:"S/ 129",imagen:"img/PRINCESS.jpg",video:"video/PRINCESS.mp4"},
+      ],
+
+  36:[{nombre:"REEBOK PRINCESS BLANCA",precio:"S/ 129",imagen:"img/PRINCESSBLANCO.jpg",video:"video/PRINCESSBLANCO.mp4"},
+      {nombre:"DURAMO RC2 W",precio:"S/ 149",imagen:"img/DURAMORC2WNEGROBLANCO.jpg",video:"video/DURAMORC2WNEGROBLANCO.mp4"},
+      ],
+
+  36.5:[{nombre:"DURAMO RC2 W",precio:"S/ 149",imagen:"img/DURAMORC2WNEGROBLANCO.jpg",video:"video/DURAMORC2WNEGROBLANCO.mp4"},
+      ],
+
+  37:[{nombre:"REEBOK PRINCESS",precio:"S/ 129",imagen:"img/PRINCESS.jpg",video:"video/PRINCESS.mp4"},
+      {nombre:"REEBOK PRINCESS BLANCA",precio:"AGOTADO",imagen:"img/PRINCESSBLANCO.jpg",video:"video/PRINCESSBLANCO.mp4"},
+      {nombre:"DURAMO RC2 W",precio:"S/ 149",imagen:"img/DURAMORC2WNEGROBLANCO.jpg",video:"video/DURAMORC2WNEGROBLANCO.mp4"},
+      {nombre:"DURAMO SL2 W NARAN",precio:"S/ 169",imagen:"img/DURAMOSL2NARA.jpg",video:"video/DURAMOSL2NARA.mp4"},
+      ],
+
+  38:[{nombre:"ADIDAS DURAMO RC2 W",precio:"S/ 149",imagen:"img/DURAMORC2WNEGROBLANCO.jpg",video:"video/DURAMORC2WNEGROBLANCO.mp4"},
+      {nombre:"ADIDAS GALAXY 7 ROSITA",precio:"S/ 149",imagen:"img/GALAXY7WNEGROROSA.jpg",video:"video/GALAXY7WNEGROROSA.mp4"},
+      {nombre:"DURAMO SL2 W NARAN",precio:"S/ 169",imagen:"img/DURAMOSL2NARA.jpg",video:"video/DURAMOSL2NARA.mp4"},
+      {nombre:"DURAMO RC2 W JQ8078",precio:"S/ 149",imagen:"img/DURAMOSRC2WCELE.jpg",video:"video/DURAMOSRC2WCELE.mp4"},
+      ],
+
+  38.5:[{nombre:"ADIDAS GALAXY 7 ROSITA",precio:"S/ 149",imagen:"img/GALAXY7WNEGROROSA.jpg",video:"video/GALAXY7WNEGROROSA.mp4"},
+        {nombre:"DURAMO RC2 W JQ8078",precio:"S/ 169",imagen:"img/DURAMOSRC2WCELE.jpg",video:"video/DURAMOSRC2WCELE.mp4"},
+        ],
+
+  40:[{nombre:"ADIDAS GALAXY 7 NEGRO",precio:"S/ 149",imagen:"img/GALAXY7MNEGRO.jpg",video:"video/GALAXY7MNEGRO.mp4"},
+      {nombre:"ADIDAS RUNFALCON 5",precio:"S/ 139",imagen:"img/RUNFALCON5.jpg",video:"video/RUNFALCON5.mp4"},
+      ],
+  
+  40.5:[{nombre:"NIKE DOWNSHIFTER 13",precio:"AGOTADO",imagen:"img/DOWNSHIFTER13NEGROBLANCO.jpg",video:"video/DOWNSHIFTER13NEGROBLANCO.mp4"},
+      {nombre:"PUMA FTR WAVE",precio:"S/ 139",imagen:"img/PUMAFTR.jpg",video:"video/PUMAFTR.mp4"},
+      {nombre:"ADIDAS DURAMO SL2",precio:"AGOTADO",imagen:"img/DURAMOSL2.jpg",video:"video/DURAMOSL2.mp4"},
+      {nombre:"ADIDAS GALAXY 6",precio:"S/ 149",imagen:"img/GALAXY6M.jpg",video:"video/GALAXY6M.mp4"},
+      {nombre:"ADIDAS GALAXY 7 NEGRO",precio:"S/ 149",imagen:"img/GALAXY7MNEGRO.jpg",video:"video/GALAXY7MNEGRO.mp4"},
+      {nombre:"ADIDAS DURAMO SPEED 2",precio:"S/ 249",imagen:"img/DURAMOSPEED2.jpg",video:"video/DURAMOSPEED2.mp4"},
+      {nombre:"ADIDAS QUESTAR 3",precio:"S/ 219",imagen:"img/QUESTAR3.jpg",video:"video/QUESTAR3.mp4"},
+      {nombre:"ADIDAS GOLETTO IXTF",precio:"S/ 129",imagen:"img/GOLETTOIXTF.jpg",video:"video/GOLETTOIXTF.mp4"},
+      {nombre:"ADIDAS RUNBLAZE",precio:"S/ 139",imagen:"img/RUNBLAZE.jpg",video:"video/RUNBLAZE.mp4"},
+      {nombre:"ADIDAS GALAXY 7 PLOMO",precio:"S/ 149",imagen:"img/GALAXY7PLOMO.jpg",video:"video/GALAXY7PLOMO.mp4"},	
+      ],
+     
+
+  41:[{nombre:"NIKE DOWNSHIFTER 13",precio:"S/ 169",imagen:"img/DOWNSHIFTER13NEGROBLANCO.jpg",video:"video/DOWNSHIFTER13NEGROBLANCO.mp4"},
+      {nombre:"PUMA FTR WAVE",precio:"S/ 139",imagen:"img/PUMAFTR.jpg",video:"video/PUMAFTR.mp4"},
+      {nombre:"ADIDAS DURAMO SL2",precio:"S/ 169",imagen:"img/DURAMOSL2.jpg",video:"video/DURAMOSL2.mp4"},
+      {nombre:"ADIDAS GALAXY 7 NEGRO",precio:"AGOTADO",imagen:"img/GALAXY7MNEGRO.jpg",video:"video/GALAXY7MNEGRO.mp4"},
+      {nombre:"ADIDAS DURAMO SPEED 2",precio:"AGOTADO",imagen:"img/DURAMOSPEED2.jpg",video:"video/DURAMOSPEED2.mp4"},
+      {nombre:"ADIDAS QUESTAR 3",precio:"S/ 219",imagen:"img/QUESTAR3.jpg",video:"video/QUESTAR3.mp4"},
+      {nombre:"ADIDAS GOLETTO IXTF",precio:"S/ 129",imagen:"img/GOLETTOIXTF.jpg",video:"video/GOLETTOIXTF.mp4"},
+      {nombre:"ADIDAS RUNBLAZE",precio:"S/ 139",imagen:"img/RUNBLAZE.jpg",video:"video/RUNBLAZE.mp4"},
+      {nombre:"ADIDAS GALAXY 7 PLOMO",precio:"S/ 149",imagen:"img/GALAXY7PLOMO.jpg",video:"video/GALAXY7PLOMO.mp4"},
+      ],
+
+  42:[{nombre:"NIKE DOWNSHIFTER 13",precio:"S/ 169",imagen:"img/DOWNSHIFTER13NEGROBLANCO.jpg",video:"video/DOWNSHIFTER13NEGROBLANCO.mp4"},
+      {nombre:"NIKE DOWNSHIFTER 13 NEGRA",precio:"S/ 169",imagen:"img/DOWNSHIFTER13NEGRA.jpg",video:"video/DOWNSHIFTER13NEGRA.mp4"},
+      {nombre:"ADIDAS DURAMO RC",precio:"S/ 149",imagen:"img/DURAMORCBLANCO.jpg",video:"video/DURAMORCBLANCO.mp4"},
+      {nombre:"ADIDAS DURAMO SL2",precio:"S/ 169",imagen:"img/DURAMOSL2.jpg",video:"video/DURAMOSL2.mp4"},
+      {nombre:"PUMA FTR WAVE",precio:"S/ 139",imagen:"img/PUMAFTR.jpg",video:"video/PUMAFTR.mp4"},
+      {nombre:"ADIDAS GALAXY 7 NEGRO",precio:"S/ 149",imagen:"img/GALAXY7MNEGRO.jpg",video:"video/GALAXY7MNEGRO.mp4"},
+      {nombre:"ADIDAS GALAXY 6",precio:"S/ 149",imagen:"img/GALAXY6M.jpg",video:"video/GALAXY6M.mp4"},
+      {nombre:"NIKE REVOLUTION 8 BLANCA",precio:"S/ 165",imagen:"img/REVOLUTION8BLANCO.jpg",video:"video/REVOLUTION8BLANCO.mp4"},
+      {nombre:"NIKE REVOLUTION 8 BLANCA ROJA",precio:"S/ 165",imagen:"img/REVOLUTION8BLANCOYROJO.jpg",video:"video/REVOLUTION8BLANCOYROJO.mp4"},
+      {nombre:"ADIDAS RUNFALCON 5",precio:"S/ 139",imagen:"img/RUNFALCON5.jpg",video:"video/RUNFALCON5.mp4"},
+      {nombre:"ADIDAS DURAMO SPEED 2",precio:"S/ 249",imagen:"img/DURAMOSPEED2.jpg",video:"video/DURAMOSPEED2.mp4"},
+      {nombre:"ADIDAS QUESTAR 3",precio:"S/ 219",imagen:"img/QUESTAR3.jpg",video:"video/QUESTAR3.mp4"},
+      {nombre:"ADIDAS GOLETTO IXTF",precio:"S/ 129",imagen:"img/GOLETTOIXTF.jpg",video:"video/GOLETTOIXTF.mp4"},
+      {nombre:"ADIDAS RUNBLAZE",precio:"S/ 139",imagen:"img/RUNBLAZE.jpg",video:"video/RUNBLAZE.mp4"},
+      {nombre:"ADIDAS GALAXY 7 PLOMO",precio:"S/ 149",imagen:"img/GALAXY7PLOMO.jpg",video:"video/GALAXY7PLOMO.mp4"},
+      ],
+  
+  42.5:[{nombre:"NIKE DOWNSHIFTER 13",precio:"S/ 169",imagen:"img/DOWNSHIFTER13NEGROBLANCO.jpg",video:"video/DOWNSHIFTER13NEGROBLANCO.mp4"},
+      {nombre:"NIKE DOWNSHIFTER 13 NEGRA",precio:"S/ 169",imagen:"img/DOWNSHIFTER13NEGRA.jpg",video:"video/DOWNSHIFTER13NEGRA.mp4"},
+      {nombre:"REEBOK EXOFIT URBAN NEGRO",precio:"AGOTADO",imagen:"img/EXOFITURBANNEGRO.jpg",video:"video/EXOFITURBANNEGRO.mp4"},
+      {nombre:"PUMA FTR WAVE",precio:"S/ 139",imagen:"img/PUMAFTR.jpg",video:"video/PUMAFTR.mp4"},
+      {nombre:"NIKE REVOLUTION 8 B",precio:"S/ 165",imagen:"img/REVOLUTION8BLANCO.jpg",video:"video/REVOLUTION8BLANCO.mp4"},
+      {nombre:"NIKE REVOLUTION 8 BR",precio:"S/ 165",imagen:"img/REVOLUTION8BLANCOYROJO.jpg",video:"video/REVOLUTION8BLANCOYROJO.mp4"},
+      {nombre:"ADIDAS DURAMO SL2",precio:"S/ 169",imagen:"img/DURAMOSL2.jpg",video:"video/DURAMOSL2.mp4"},
+      {nombre:"ADIDAS GALAXY 6",precio:"S/ 149",imagen:"img/GALAXY6M.jpg",video:"video/GALAXY6M.mp4"},
+      {nombre:"ADIDAS GALAXY 7 NB",precio:"AGOTADO",imagen:"img/GALAXY7MNEGROBLANCO.jpg",video:"video/GALAXY7MNEGROBLANCO.mp4"},
+      {nombre:"ADIDAS GALAXY 7 NEGRO",precio:"S/ 149",imagen:"img/GALAXY7MNEGRO.jpg",video:"video/GALAXY7MNEGRO.mp4"},
+      {nombre:"ADIDAS DURAMO SPEED 2",precio:"S/ 249",imagen:"img/DURAMOSPEED2.jpg",video:"video/DURAMOSPEED2.mp4"},
+      ],
+  
+  43:[{nombre:"NIKE DOWNSHIFTER 13",precio:"S/ 169",imagen:"img/DOWNSHIFTER13NEGROBLANCO.jpg",video:"video/DOWNSHIFTER13NEGROBLANCO.mp4"},
+      {nombre:"NIKE DOWNSHIFTER 13 NEGRA",precio:"S/ 169",imagen:"img/DOWNSHIFTER13NEGRA.jpg",video:"video/DOWNSHIFTER13NEGRA.mp4"},
+      {nombre:"REEBOK EXOFIT URBAN NEGRO",precio:"S/ 139",imagen:"img/EXOFITURBANNEGRO.jpg",video:"video/EXOFITURBANNEGRO.mp4"},
+      {nombre:"NIKE REVOLUTION 8 BLANCA",precio:"S/ 165",imagen:"img/REVOLUTION8BLANCO.jpg",video:"video/REVOLUTION8BLANCO.mp4"},
+      {nombre:"NIKE REVOLUTION 8 BLANCA ROJA",precio:"S/ 165",imagen:"img/REVOLUTION8BLANCOYROJO.jpg",video:"video/REVOLUTION8BLANCOYROJO.mp4"},
+      {nombre:"ADIDAS DURAMO SL2",precio:"S/ 169",imagen:"img/DURAMOSL2.jpg",video:"video/DURAMOSL2.mp4"},
+      {nombre:"ADIDAS GALAXY 7 NEGRO",precio:"S/ 149",imagen:"img/GALAXY7MNEGRO.jpg",video:"video/GALAXY7MNEGRO.mp4"},
+      {nombre:"ADIDAS RUNFALCON 5",precio:"S/ 139",imagen:"img/RUNFALCON5.jpg",video:"video/RUNFALCON5.mp4"},
+      {nombre:"ADIDAS QUESTAR 3",precio:"S/ 219",imagen:"img/QUESTAR3.jpg",video:"video/QUESTAR3.mp4"},
+      {nombre:"ADIDAS GOLETTO IXTF",precio:"S/ 129",imagen:"img/GOLETTOIXTF.jpg",video:"video/GOLETTOIXTF.mp4"},
+      ],
+
+  44:[{nombre:"NIKE DOWNSHIFTER 13",precio:"S/ 169",imagen:"img/DOWNSHIFTER13NEGROBLANCO.jpg",video:"video/DOWNSHIFTER13NEGROBLANCO.mp4"},
+      {nombre:"ADIDAS GALAXY 6",precio:"S/ 149",imagen:"img/GALAXY6M.jpg",video:"video/GALAXY6M.mp4"},
+      {nombre:"NIKE REVOLUTION 8 BLANCA",precio:"S/ 165",imagen:"img/REVOLUTION8BLANCO.jpg",video:"video/REVOLUTION8BLANCO.mp4"},
+      {nombre:"NIKE REVOLUTION 8 BLANCA ROJA",precio:"S/ 165",imagen:"img/REVOLUTION8BLANCOYROJO.jpg",video:"video/REVOLUTION8BLANCOYROJO.mp4"},
+      {nombre:"ADIDAS GOLETTO IXTF",precio:"S/ 129",imagen:"img/GOLETTOIXTF.jpg",video:"video/GOLETTOIXTF.mp4"},],
+
+  44.5:[{nombre:"ADIDAS DURAMO RC",precio:"S/ 149",imagen:"img/DURAMORCBLANCO.jpg",video:"video/DURAMORCBLANCO.mp4"},
+      {nombre:"ADIDAS GALAXY 6",precio:"S/ 149",imagen:"img/GALAXY6M.jpg",video:"video/GALAXY6M.mp4"},
+      ],
+};
+
+const lista=document.getElementById("listaTallas");
+tallas.forEach(t=>{
+  let item=document.createElement("div"); item.className="talla-item"; item.textContent="Talla "+t;
+  let cont=document.createElement("div"); cont.id="modelos-"+t; cont.style.display="none";
+  item.onclick=()=>toggleModelos(t);
+  item.appendChild(cont); lista.appendChild(item);
+});
+
+function toggleModelos(t){
+  let cont=document.getElementById("modelos-"+t);
+  cont.style.display = cont.style.display==="block"?"none":"block";
+  cont.innerHTML="";
+  if(!modelosPorTalla[t]){cont.innerHTML="<p>No hay modelos disponibles.</p>";return;}
+  modelosPorTalla[t].forEach(m=>{
+    let div=document.createElement("div"); div.className="modelo";
+    div.onclick = (e) => {
+  e.stopPropagation(); // 👈 evita que se cierre la talla
+  abrirModal(m);
+};
+
+    div.innerHTML=`<img src="${m.imagen}"><div><h3>${m.nombre}</h3><p>${m.precio}</p></div>`;
+    cont.appendChild(div);
+  });
+}
+
+function abrirModal(m){
+  document.getElementById("modalTitulo").innerText = m.nombre;
+  document.getElementById("modalPrecio").innerText = m.precio;
+
+  let video = document.getElementById("modalVideo");
+  let img = document.getElementById("modalImagen");
+  let src = document.getElementById("modalVideoSrc");	
+
+  if (m.video) {
+    src.src = m.video;
+    video.style.display = "block";
+    img.style.display = "none";
+
+    video.muted = true;       // 🔥 SIEMPRE MUTEADO
+    video.playsInline = true; // 🔥 iPhone fix
+    video.load();
+    video.play();
+  } 
+  else {
+    img.src = m.imagen;
+    img.style.display = "block";
+    video.style.display = "none";
+  }
+
+  document.getElementById("modalWspBoton").href =
+    `https://wa.me/51923285372?text=Hola, quiero el modelo ${m.nombre}`;
+
+  document.getElementById("modalProducto").style.display = "flex";
+
+}
+
+function cerrarModal(){ document.getElementById("modalProducto").style.display="none"; document.getElementById("modalVideo").pause(); }
+</script>
+</body>
+</html>
